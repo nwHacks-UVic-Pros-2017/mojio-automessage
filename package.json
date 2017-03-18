@@ -20,5 +20,8 @@
   "bugs": {
     "url": "https://github.com/nwHacks-UVic-Pros-2017/mojio-automessage/issues"
   },
-  "homepage": "https://github.com/nwHacks-UVic-Pros-2017/mojio-automessage#readme"
+  "homepage": "https://github.com/nwHacks-UVic-Pros-2017/mojio-automessage#readme",
+  "dependencies": {
+    "express": "^4.15.2"
+  }
 }
