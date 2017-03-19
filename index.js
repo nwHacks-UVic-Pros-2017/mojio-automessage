@@ -7,24 +7,36 @@ var https = require('https');
 var fs = require('fs');
 var GoogleHandler = require('./GoogleHandler.js');
 var TwilioSMSHandler = require('./TwilioSMSHandler.js');
+var session = require('express-session');
+var path = require('path');
 
 var app = express();
 var mojio = new MojioUser();
 var google = new GoogleHandler();
 var twilio = new TwilioSMSHandler();
 
-app.get('/', function(req, res) {
-    mojio.authorize('aj.podeziel@gmail.com', 'ZTxNPJvx7@vGw0', function(success) {
-    	if (success) {
-    		console.log("Authenticated");
-    	} else {
-			console.log("NOT Authenticated");
-    	}
-    });
-    res.send("I'm an app!!!!!!!!!!!");
+// session middleware (for tracking Mojio logins)
+var sess = {
+    "secret": "fdsf53t44rfef23",
+    "cookie": {"maxAge": 360000}
+};
+app.use(session(sess));
+
+// check if session is authorized, if not redirect to login screen
+app.use(function(req, res, next) {
+    if (!req.session.mojio_client || !req.session.mojio_client.auth_state) {
+        res.sendFile(path.join(__dirname, "static"), "login.html");
+    }
+    else {
+        next();
+    }
 });
 
-app.get('/signIn', function(req, res) {
+app.get('/', function(req, res) {
+    res.sendFile(path.join(__dirname, "static"), 'index.html');
+});
+
+app.post('/signIn', function(req, res) {
 	mojio.authorize(req.query.userName, req.query.password, function(success) {
     	if (success) {
     		console.log("Authenticated with user " + req.query.userName);
@@ -68,24 +80,23 @@ app.get('/setupLeaveWorkAlerts', function(req, res) {
 		}
 	});
 
-});
-
-app.post('/' + vehicleId + '/ignition_on', function(req, res) {
-    console.log("Car turned on");
-    console.log(req);
-    mojio.get_address(vehicleId, function(location) {
-            if (location) {
-                console.log(location);
-            } else {
-                console.log("error getting location");
-            }
-            if (google.is_work_address(workAddress, location.Lat, location.Lng)) {
-                var duration = google.estimate_time_home(workAddress, homeAddress);
-                var msg = twilio.formatMessage(workAddress, homeAddress, duration);
-                twilio.sendText(phone, msg);
-            }
-        });
-    //Send txt code here
+	app.post('/' + vehicleId + '/ignition_on', function(req, res) {
+		console.log("Car turned on");
+		console.log(req);
+		mojio.get_address(vehicleId, function(location) {
+				if (location) {
+					console.log(location);
+				} else {
+					console.log("error getting location");
+				}
+				if (google.is_work_address(workAddress, location.Lat, location.Lng)) {
+					var duration = google.estimate_time_home(workAddress, homeAddress);
+					var msg = twilio.formatMessage(workAddress, homeAddress, duration);
+					twilio.sendText(phone, msg);
+				}
+			});
+		//Send txt code here
+	});
 });
 
 app.get('/getAddress', function(req, res) {
