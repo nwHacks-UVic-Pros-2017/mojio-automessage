@@ -13,8 +13,8 @@ var fs = require('fs');
 var http = require('http');
 var https = require('https');
 
-var privateKey  = fs.readFileSync('sslcert/server.key', 'utf8');
-var certificate = fs.readFileSync('sslcert/server.crt', 'utf8');
+var certificate = fs.readFileSync('./static/sslcert/fullchain.pem');
+var privateKey = fs.readFileSync('./static/sslcert/privkey.pem');
 
 var credentials = {key: privateKey, cert: certificate};
 
@@ -97,7 +97,7 @@ app.get('/setupLeaveWorkAlerts', function(req, res) {
 	var homeAddress = req.query.homeAddress;
 	var vehicleId = req.query.vehicleId;
 
-	var base_url = 'https://' + req.get('host');
+	var base_url = 'https://bentheassistant.me:8443';
 	var key;
 	console.log(base_url);
     var moj_client = mj_user_registry.getBySessionId(req.sessionId);
