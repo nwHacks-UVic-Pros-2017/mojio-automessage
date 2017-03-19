@@ -15,7 +15,12 @@ class TwilioSMSHandler {
 
 
     sendText(to, body) {
-        console.log (client.outgoingCallerIds);
+        this.client.outgoingCallerIds.list({ phoneNumber: to }, function(err, data) {
+            data.outgoingCallerIds.forEach(function(callerId) {
+                console.log(callerId.phoneNumber);
+            });
+        });
+        
         this.client.messages.create({
             to:  to,
             from: process.env.TWILIO_NUMBER,
