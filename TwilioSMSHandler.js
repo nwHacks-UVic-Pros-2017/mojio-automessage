@@ -15,7 +15,7 @@ class TwilioSMSHandler {
 
     registerNumber(phone, callback) {
         this.client.outgoingCallerIds.create({
-            phoneNumber: to
+            phoneNumber: phone
         }, function(err, callerId) {
             if (err==null) {
                 callback(callerId.validation_code);
