@@ -24,6 +24,7 @@
   "homepage": "https://github.com/nwHacks-UVic-Pros-2017/mojio-automessage#readme",
   "dependencies": {
     "express": "^4.15.2",
-    "mojio-client-lite": "git+https://github.com/mojio/MojioClientLite.git"
+    "mojio-client-lite": "git+https://github.com/mojio/MojioClientLite.git",
+    "twilio": "^2.11.1"
   }
 }
