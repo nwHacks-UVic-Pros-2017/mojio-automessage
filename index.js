@@ -83,7 +83,7 @@ app.get('/getVehicles', isAuthenticated, function(req, res) {
 	});
 });
 
-app.get('/setupLeaveWorkAlerts', isAuthenticated, function(req, res) {
+app.get('/setupLeaveWorkAlerts', function(req, res) {
 	console.log('/setupLeaveWorkAlerts');
 	var number = req.query.number;
 	var fromName = req.query.fromName;
@@ -95,7 +95,6 @@ app.get('/setupLeaveWorkAlerts', isAuthenticated, function(req, res) {
 	var base_url = 'https://' + req.get('host');
 	console.log(base_url);
 	mojio.setup_ignition_event(vehicleId, base_url, function(key) {
-		res.send(key);
 		if (key) {
 			console.log("Mojio sucessfully posting on ignition-on");
 		} else {
