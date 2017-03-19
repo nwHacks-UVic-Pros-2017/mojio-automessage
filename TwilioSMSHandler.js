@@ -19,6 +19,7 @@ class TwilioSMSHandler {
             phoneNumber: to
         }, function(err, callerId) {
             console.log(err);
+            console.log(callerId);
         });
 
         this.client.messages.create({
