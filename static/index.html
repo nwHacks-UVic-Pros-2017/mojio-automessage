@@ -56,16 +56,16 @@ Adapted from Twitter Bootstrap dashboard example:
         </div>
         <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
             <h1 class="page-header">2011 Mazda 3</h1>
-            <div id="map" width="100px" height="100px"></div>
+            <div id="map" style="height:600px;"></div>
             <script>
                 function initMap() {
-                    var myLatLng = {lat: -25.363, lng: 131.044};
+                    var myLatLng = {lat: 49.258838, lng: -123.056623};
 
                     // Create a map object and specify the DOM element for display.
                     var map = new google.maps.Map(document.getElementById('map'), {
                         center: myLatLng,
                         scrollwheel: false,
-                        zoom: 4
+                        zoom: 12
                     });
 
                     // Create a marker and set its position.
@@ -81,11 +81,38 @@ Adapted from Twitter Bootstrap dashboard example:
                     async defer></script>
 
             <div class="row">
+                <label for="basic-url">What is the address at your current location?</label>
+                <div class="input-group">
+                    <span class="input-group-addon" id="basic-addon3">Address</span>
+                    <input type="text" class="form-control" id="basic-url" aria-describedby="basic-addon3">
+                </div>
                 <div class="col-lg-10">
                     <h2>Rules</h2>
+                    <div class="btn-group">
+                        <button class="btn btn-default btn-lg dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            When... <span class="caret"></span>
+                        </button>
+                        <ul class="dropdown-menu">
+                            <li>Option 1</li>
+                            <li>Option 2</li>
+                            <li>Option 3</li>
+                        </ul>
+                    </div>
                 </div>
                 <div class="col-lg-2">
-                    Test
+                    <button type="button" class="btn btn-default btn-lg">
+                        <span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Add
+                    </button>
+                    <div class="btn-group">
+                        <button class="btn btn-default btn-lg dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            Do... <span class="caret"></span>
+                        </button>
+                        <ul class="dropdown-menu">
+                            <li>Option 1</li>
+                            <li>Option 2</li>
+                            <li>Option 3</li>
+                        </ul>
+                    </div>
                 </div>
             </div>
         </div>
