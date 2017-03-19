@@ -47,7 +47,7 @@ app.get("/signIn", function(req, res) {
     res.sendFile(path.join(__dirname, "static", "login.html"));
 });
 
-app.post('/signIn', function(req, res) {
+app.get('/login', function(req, res) {
 	mojio.authorize(req.query.userName, req.query.password, function(success) {
     	if (success) {
     		console.log("Authenticated with user " + req.query.userName);
