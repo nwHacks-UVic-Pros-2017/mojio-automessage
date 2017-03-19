@@ -5,7 +5,7 @@ class GoogleHandler {
 
 	constructor() {
 		this.apiKey = process.env.GOOGLE_API_KEY;
-		this.url = "https://maps.googleapis.com/maps/api/distancematrix/xml?"
+		this.url = "https://maps.googleapis.com/maps/api/distancematrix/json?"
 		this.distance_threadhold = 500; //meters
 	}
 
