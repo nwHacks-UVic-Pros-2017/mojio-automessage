@@ -15,7 +15,7 @@ var twilio = new TwilioSMSHandler();
 var mj_user_registry = new MojioUserRegistry();
 
 
-var port = process.env.PORT || 8080;
+var port = process.env.PORT || 80;
 
 app.listen(port, function() {
     console.log("Listening on port " + port);
