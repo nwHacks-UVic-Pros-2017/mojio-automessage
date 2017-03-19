@@ -97,7 +97,7 @@ app.get('/setupLeaveWorkAlerts', function(req, res) {
 	var homeAddress = req.query.homeAddress;
 	var vehicleId = req.query.vehicleId;
 
-	var base_url = 'https://' + req.get('host');
+	var base_url = 'https://bentheassistant.me:8443';
 	var key;
 	console.log(base_url);
     var moj_client = mj_user_registry.getBySessionId(req.sessionId);
