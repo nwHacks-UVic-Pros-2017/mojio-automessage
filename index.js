@@ -2,8 +2,6 @@
 
 var express = require('express');
 var MojioUser = require('./lib/MojioUser.js');
-var http = require('http');
-var https = require('https');
 var fs = require('fs');
 var GoogleHandler = require('./GoogleHandler.js');
 var TwilioSMSHandler = require('./TwilioSMSHandler.js');
@@ -17,7 +15,7 @@ var twilio = new TwilioSMSHandler();
 var port = process.env.PORT || 8080;
 
 app.listen(port, function() {
-    console.log("Listening on port 8080");
+    console.log("Listening on port " + port);
 });
 
 app.get('/', function(req, res) {
@@ -86,9 +84,13 @@ app.get('/setupLeaveWorkAlerts', function(req, res) {
 					console.log("Mojio failed getting car's location");
 				}
 				if (google.is_work_address(workAddress, location.Lat, location.Lng)) {
+					console.log("Car is near work address");
 					var duration = google.estimate_time_home(workAddress, homeAddress);
 					var msg = twilio.formatMessage(workAddress, homeAddress, duration);
+					console.log(msg);
 					twilio.sendText(phone, msg);
+				} else {
+					console.log("Car is not near work address");
 				}
 			});
 	    //Send txt code here

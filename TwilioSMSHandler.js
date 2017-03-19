@@ -7,8 +7,8 @@ class TwilioSMSHandler {
 
     constructor() {
         // Twilio Credentials
-        this.accountSid = 'ACc064797f95f630c3fae396d5b7c813bc';
-        this.authToken = '1a83966df89b604012003c48ff7bae07';
+        this.accountSid = process.env.TWILIO_SID;
+        this.authToken = process.env.TWILIO_TOKEN;
 
         //require the Twilio module and create a REST client
         var client = new require('twilio')(this.accountSid, this.authToken);
@@ -18,7 +18,7 @@ class TwilioSMSHandler {
     sendText(to, body) {
         client.messages.create({
             to:  to,
-            from: '+17784004137',
+            from: process.env.TWILIO_NUMBER,
             body: body,
         }, function (err, message) {
             console.log(message.sid);
