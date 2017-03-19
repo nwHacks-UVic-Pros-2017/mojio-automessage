@@ -1,0 +1,3 @@
+https://mojio-automessage.herokuapp.com/setupLeaveWorkAlerts?vehicleId=2ca91ba6-4c2c-48f8-b9ac-aa61fad4a363&number=+16042232414&fromName=Ty&toName=Shae
+
+curl -v -H "Content-Type: application/json" -X POST -d '{}' https://mojio-automessage.herokuapp.com/2ca91ba6-4c2c-48f8-b9ac-aa61fad4a363/ignition_on

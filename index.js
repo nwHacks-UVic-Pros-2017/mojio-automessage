@@ -81,7 +81,6 @@ app.get('/setupLeaveWorkAlerts', function(req, res) {
 
 	app.post('/' + vehicleId + '/ignition_on', function(req, res) {
 		console.log("Car turned on");
-	    console.log(req);
 		mojio.get_address(vehicleId, function(location) {
 				if (location) {
 					console.log("Mojio sucessfully recieved car's location");
