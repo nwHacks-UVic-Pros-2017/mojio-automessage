@@ -48,7 +48,7 @@ app.get("/signIn", function(req, res) {
 });
 
 app.post('/signIn', function(req, res) {
-	console.log(eq.query.userName);
+	console.log(req.query.userName);
 	mojio.authorize(req.query.userName, req.query.password, function(success) {
     	if (success) {
     		console.log("Authenticated with user " + req.query.userName);
