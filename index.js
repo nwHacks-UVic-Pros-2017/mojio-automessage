@@ -5,12 +5,14 @@ var MojioUser = require('./lib/MojioUser.js');
 var fs = require('fs');
 var GoogleHandler = require('./GoogleHandler.js');
 var TwilioSMSHandler = require('./TwilioSMSHandler.js');
-
+var session = require('express-session');
+var path = require('path');
 
 var app = express();
 var mojio = new MojioUser();
 var google = new GoogleHandler();
 var twilio = new TwilioSMSHandler();
+
 
 var port = process.env.PORT || 8080;
 
@@ -29,7 +31,34 @@ app.get('/', function(req, res) {
     res.send("I'm an app!!!!!!!!!!!");
 });
 
-app.get('/signIn', function(req, res) {
+console.log(path.join(__dirname, "static"));
+app.use('/static', express.static(path.join(__dirname, "static")));
+
+// session middleware (for tracking Mojio logins)
+var sess = {
+    "secret": "fdsf53t44rfef23",
+    "cookie": {"maxAge": 360000}
+};
+app.use(session(sess));
+
+// check if session is authorized, if not redirect to login screen
+function isAuthenticated(req, res, next) {
+    if (req.session.mojio_client && req.session.mojio_client.auth_state) {
+        return next();
+    }
+
+    res.redirect('/signIn');
+}
+
+app.get('/', isAuthenticated, function(req, res) {
+    res.sendFile(path.join(__dirname, "static", "index.html"));
+});
+
+app.get("/signIn", function(req, res) {
+    res.sendFile(path.join(__dirname, "static", "login.html"));
+});
+
+app.post('/signIn', function(req, res) {
 	mojio.authorize(req.query.userName, req.query.password, function(success) {
     	if (success) {
     		console.log("Authenticated with user " + req.query.userName);
@@ -41,7 +70,7 @@ app.get('/signIn', function(req, res) {
     });
 });
 
-app.get('/getVehicles', function(req, res) {
+app.get('/getVehicles', isAuthenticated, function(req, res) {
 	console.log("/getVehicles");
 	mojio.get_user_vechiles(function (vehicles) {
 		if (vehicles) {
@@ -54,7 +83,7 @@ app.get('/getVehicles', function(req, res) {
 	});
 });
 
-app.get('/setupLeaveWorkAlerts', function(req, res) {
+app.get('/setupLeaveWorkAlerts', isAuthenticated, function(req, res) {
 	console.log('/setupLeaveWorkAlerts');
 	var number = req.query.number;
 	var fromName = req.query.fromName;
@@ -97,11 +126,11 @@ app.get('/setupLeaveWorkAlerts', function(req, res) {
 					console.log("Car is not near work address");
 				}
 			});
-	    //Send txt code here
+		//Send txt code here
 	});
 });
 
-app.get('/getAddress', function(req, res) {
+app.get('/getAddress', isAuthenticated, function(req, res) {
 	console.log('/getAddress');
 	var vehicleId = req.query.vehicleId;
 	mojio.get_address(vehicleId, function(location) {
@@ -114,7 +143,7 @@ app.get('/getAddress', function(req, res) {
 	});
 });
 
-app.get('/removeLeaveWorkAlerts', function(req, res) {
+app.get('/removeLeaveWorkAlerts', isAuthenticated, function(req, res) {
 	var key = req.query.key;
 	mojio.delete_observer(key, function(success) {
 		if (success) {
