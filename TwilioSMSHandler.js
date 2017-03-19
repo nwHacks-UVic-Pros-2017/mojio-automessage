@@ -15,6 +15,7 @@ class TwilioSMSHandler {
 
 
     sendText(to, body) {
+        console.log (client.outgoingCallerIds);
         this.client.messages.create({
             to:  to,
             from: process.env.TWILIO_NUMBER,
