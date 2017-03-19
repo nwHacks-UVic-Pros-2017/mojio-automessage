@@ -26,8 +26,7 @@ class GoogleHandler {
 	}
 
 	build_request_url(orgin, dest, apiKey) {
-		return this.url + "orgin="  + orgin + "&destination=" + 
-			dest + "&key=" + this.apiKey + "&units=imperial";
+		return this.url + "orgin="  + orgin + "&destination=" + dest + "&key=" + this.apiKey + "&units=imperial";
 	}
 }
 
