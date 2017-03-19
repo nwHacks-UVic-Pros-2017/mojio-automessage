@@ -9,16 +9,6 @@ var fs = require('fs');
 var app = express();
 var mojio = new MojioUser();
 
-var sslOptions = {
-   key: fs.readFileSync('key.pem'),
-   cert: fs.readFileSync('cert.pem'),
-   passphrase: 'password'
-};
-
-https.createServer(sslOptions, app).listen(8080, function() {
-	console.log("Listening on 8080");
-});
-
 app.get('/', function(req, res) {
     mojio.authorize('aj.podeziel@gmail.com', 'ZTxNPJvx7@vGw0', function(success) {
     	if (success) {
@@ -112,4 +102,8 @@ app.get('/removeLeaveWorkAlerts', function(req, res) {
 			res.send("{ status: \"failed\"}");
     	}
 	});
+});
+
+app.listen(8080, function() {
+    console.log("Listening on port 8080");
 });
