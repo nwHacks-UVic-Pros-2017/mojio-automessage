@@ -18,6 +18,7 @@ class GoogleHandler {
 		var xmlhttp = new XMLHttpRequest();
 		xmlhttp.open( "GET", request, false ); // false for synchronous request
     	xmlhttp.send( null );
+    	console.log(xmlhttp.responseText);
     	return xmlhttp.responseText.rows[0].elements[0].duration.text;
 	}
 
@@ -26,6 +27,7 @@ class GoogleHandler {
 		var xmlhttp = new XMLHttpRequest();
 		xmlhttp.open( "GET", request, false ); // false for synchronous request
     	xmlhttp.send( null );
+    	console.log(xmlhttp.responseText);
     	var is_within_distance = xmlhttp.responseText.rows[0].elements[0].distance.value <= this.distance_threadhold;
     	return is_within_distance;
 	}
