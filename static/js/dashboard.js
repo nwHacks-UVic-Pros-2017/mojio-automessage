@@ -12,12 +12,17 @@ function init() {
 
         vehicles = data;
 
-        var carsList = $("#cars-list")
+        var carsList = $("#cars-list");
         for (var i = 0; i < vehicles.length; i++) {
+            var link = document.createElement("a");
             var listEle = document.createElement("ul");
             listEle.innerHTML = vehicles[i].Name;
-            carsList.append(listEle);
+            link.setAttribute('href', "#");
+            link.append(listEle);
+            carsList.append(link);
         }
+
+        setCar(0);
 
     })
 
@@ -34,11 +39,20 @@ function initMap() {
     });
 
     // Create a marker and set its position.
-    var marker = new google.maps.Marker({
+    marker = new google.maps.Marker({
         map: map,
         position: myLatLng,
         title: 'Hello World!'
     });
+}
+
+function setCar(carInd) {
+
+    // set name
+    $("#current-car-name").html(vehicles[carInd].Name);
+
+    // TODO: update map
+
 }
 
 $(document).ready(function() {
