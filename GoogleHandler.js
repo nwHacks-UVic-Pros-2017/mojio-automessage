@@ -5,12 +5,12 @@ class GoogleHandler {
 
 	constructor() {
 		this.apiKey = process.env.GOOGLE_API_KEY;
-		this.url = "https://maps.googleapis.com/maps/api/directions/xml?"
+		this.url = "https://maps.googleapis.com/maps/api/distancematrix/xml?"
 		this.distance_threadhold = 500; //meters
 	}
 
 	build_request_url(orgin, dest, apiKey) {
-		return this.url + "origin="  + orgin + "&destination=" + dest + "&key=" + this.apiKey + "&units=imperial";
+		return this.url + "origins="  + orgin + "&destinations=" + dest + "&key=" + this.apiKey + "&units=imperial";
 	}
 
 	estimate_time_home(workAddress, homeAddress) {
