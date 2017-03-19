@@ -2,7 +2,21 @@
 
 var express = require('express');
 var MojioUser = require('./lib/MojioUser.js');
+var http = require('http');
+var https = require('https');
+var fs = require('fs');
+
 var app = express();
+
+var sslOptions = {
+   key: fs.readFileSync('key.pem'),
+   cert: fs.readFileSync('cert.pem'),
+   passphrase: 'password'
+};
+
+https.createServer(sslOptions, app).listen(8080, function() {
+	console.log("Listening on 8080");
+});
 
 app.get('/', function(req, res) {
 	var mojio = new MojioUser();
@@ -27,8 +41,4 @@ app.get('/', function(req, res) {
 app.post('/:vehicle_id/ignition_on', function(req, res) {
 	console.log("Car turned on");
     console.log(req);
-});
-
-app.listen(8080, function() {
-    console.log("Listening on port 8080.");
 });
