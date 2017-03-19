@@ -8,7 +8,6 @@ var fs = require('fs');
 var GoogleHandler = require('./GoogleHandler.js');
 var TwilioSMSHandler = require('./TwilioSMSHandler.js');
 
-
 var app = express();
 var mojio = new MojioUser();
 var google = new GoogleHandler();
@@ -114,6 +113,6 @@ app.get('/removeLeaveWorkAlerts', function(req, res) {
 	});
 });
 
-app.listen(8080, function() {
-    console.log("Listening on port 8080");
+app.listen(5030, function() {
+    console.log("Listening on port 5030");
 });
