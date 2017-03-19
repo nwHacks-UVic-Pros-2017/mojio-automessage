@@ -86,6 +86,7 @@ app.get('/setupLeaveWorkAlerts', function(req, res) {
 	mojio.setup_ignition_event(vehicleId, base_url, function(res) {
 		if (res) {
 			console.log("Mojio sucessfully posting on ignition-on");
+			console.log(res);
 			key = res;
 		} else {
 			console.log("Mojio failure posting on ignition-on");
@@ -94,7 +95,7 @@ app.get('/setupLeaveWorkAlerts', function(req, res) {
 
 	twilio.registerNumber(number, function(verification_code) {
 		console.log(verification_code);
-		res.send({"key:" key, "code" : verification_code });
+		res.send({"code" : verification_code });
 	});
 
 	app.post('/' + vehicleId + '/ignition_on', function(req, res) {
