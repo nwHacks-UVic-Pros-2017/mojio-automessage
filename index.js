@@ -14,7 +14,7 @@ var google = new GoogleHandler();
 var twilio = new TwilioSMSHandler();
 
 
-var port = process.env.PORT || 443;
+var port = process.env.PORT || 80;
 
 app.listen(port, function() {
     console.log("Listening on port " + port);
