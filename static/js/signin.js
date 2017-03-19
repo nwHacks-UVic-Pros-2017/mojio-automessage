@@ -2,12 +2,11 @@
  * Created by charlie on 2017-03-19.
  */
 
-$("#form-signin").submit(function(e) {
-    e.preventDefault();
+$("#login-submit").click(function(e) {
     console.log("Form submitted!");
 
-    var email = $("#inputEmail").value;
-    var password = $("#inputPassword").value;
+    var email = $("#inputEmail").val();
+    var password = $("#inputPassword").val();
 
     $.get("/login", {
         "userName": email,
