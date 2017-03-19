@@ -20,7 +20,6 @@ app.listen(port, function() {
     console.log("Listening on port " + port);
 });
 
-console.log(path.join(__dirname, "static"));
 app.use('/static', express.static(path.join(__dirname, "static")));
 
 // session middleware (for tracking Mojio logins)
@@ -51,10 +50,10 @@ app.get('/login', function(req, res) {
 	mojio.authorize(req.query.userName, req.query.password, function(success) {
     	if (success) {
     		console.log("Authenticated with user " + req.query.userName);
-    		res.send("{ status: \"success\"}");
+    		res.send("{ \"status\": \"success\"}");
     	} else {
 			console.log("NOT Authenticated");
-			res.send("{ status: \"failed\"}");
+			res.send("{ \"status\": \"failed\"}");
     	}
     });
 });

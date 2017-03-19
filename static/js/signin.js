@@ -12,7 +12,13 @@ $("#login-submit").click(function(e) {
         "userName": email,
         "password": password
     }, function(data) {
-        console.log(data);
+        var status = JSON.parse(data).status;
+        if (status === "success") {
+            window.location.href = "/";
+        }
+        else {
+            alert("Invalid username/password. You made Ben cry.");
+        }
     });
 
 });
