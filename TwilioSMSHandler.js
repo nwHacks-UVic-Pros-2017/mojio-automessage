@@ -10,7 +10,7 @@ class TwilioSMSHandler {
         this.accountSid = process.env.TWILIO_SID;
         this.authToken = process.env.TWILIO_TOKEN;
         //require the Twilio module and create a REST client
-        var client = new require('twilio')(this.accountSid, this.authToken);
+        client = new require('twilio')(this.accountSid, this.authToken);
     }
 
 
