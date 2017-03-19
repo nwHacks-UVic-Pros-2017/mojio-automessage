@@ -8,17 +8,25 @@ var TwilioSMSHandler = require('./TwilioSMSHandler.js');
 var session = require('express-session');
 var path = require('path');
 
+var fs = require('fs');
+var http = require('http');
+var https = require('https');
+
+var privateKey  = fs.readFileSync('sslcert/server.key', 'utf8');
+var certificate = fs.readFileSync('sslcert/server.crt', 'utf8');
+
+var credentials = {key: privateKey, cert: certificate};
+
 var app = express();
 var mojio = new MojioUser();
 var google = new GoogleHandler();
 var twilio = new TwilioSMSHandler();
 
+var httpServer = http.createServer(app);
+var httpsServer = https.createServer(credentials, app);
 
-var port = process.env.PORT || 80;
-
-app.listen(port, function() {
-    console.log("Listening on port " + port);
-});
+httpServer.listen(8080);
+httpsServer.listen(8443);
 
 app.use('/static', express.static(path.join(__dirname, "static")));
 
