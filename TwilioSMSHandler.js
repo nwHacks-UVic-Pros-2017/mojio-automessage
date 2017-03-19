@@ -10,12 +10,12 @@ class TwilioSMSHandler {
         this.accountSid = process.env.TWILIO_SID;
         this.authToken = process.env.TWILIO_TOKEN;
         //require the Twilio module and create a REST client
-        client = new require('twilio')(this.accountSid, this.authToken);
+        this.client = new require('twilio')(this.accountSid, this.authToken);
     }
 
 
     sendText(to, body) {
-        client.messages.create({
+        this.client.messages.create({
             to:  to,
             from: process.env.TWILIO_NUMBER,
             body: body,
