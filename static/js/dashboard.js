@@ -9,7 +9,16 @@ function init() {
 
     // get vehicles
     $.get('/getVehicles', {}, function(data) {
-        console.log(data);
+
+        vehicles = data;
+
+        var carsList = $("#cars-list")
+        for (var i = 0; i < vehicles.length; i++) {
+            var listEle = document.createElement("ul");
+            listEle.innerHTML = vehicles[i].Name;
+            carsList.append(listEle);
+        }
+
     })
 
 }

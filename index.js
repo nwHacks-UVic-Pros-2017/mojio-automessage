@@ -70,7 +70,7 @@ app.get('/login', function(req, res) {
 });
 
 app.get('/logout', function(req, res) {
-    req.session.mojio_client = undefined;
+    mj_user_registry.deleteSession(req.sessionId);
     res.redirect("/signIn");
 });
 
