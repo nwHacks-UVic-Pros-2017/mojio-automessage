@@ -14,6 +14,12 @@ var mojio = new MojioUser();
 var google = new GoogleHandler();
 var twilio = new TwilioSMSHandler();
 
+var port = process.env.PORT || 8080;
+
+app.listen(port, function() {
+    console.log("Listening on port 8080");
+});
+
 app.get('/', function(req, res) {
     mojio.authorize('aj.podeziel@gmail.com', 'ZTxNPJvx7@vGw0', function(success) {
     	if (success) {
@@ -112,8 +118,4 @@ app.get('/removeLeaveWorkAlerts', function(req, res) {
 			res.send("{ status: \"failed\"}");
     	}
 	});
-});
-
-app.listen(8080, function() {
-    console.log("Listening on port 8080");
 });
