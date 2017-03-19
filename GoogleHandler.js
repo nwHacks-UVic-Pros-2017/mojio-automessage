@@ -23,7 +23,7 @@ class GoogleHandler {
 
 	is_work_address(workAddress, lat, lng) {
 		var request = this.build_request_url(workAddress, lat + "," + lng, this.apiKey);
-		var xhttp = new XMLHttpRequest();
+		var xmlhttp = new XMLHttpRequest();
 		xmlhttp.open( "GET", request, false ); // false for synchronous request
     	xmlhttp.send( null );
     	var is_within_distance = xmlHttp.responseText.rows[0].elements[0].distance.value <= this.distance_threadhold;
