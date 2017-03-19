@@ -15,7 +15,7 @@ class GoogleHandler {
 
 	estimate_time_home(workAddress, homeAddress) {
 		var request = this.build_request_url(workAddress, homeAddress, this.apiKey);
-		var xhttp = new XMLHttpRequest();
+		var xmlhttp = new XMLHttpRequest();
 		xmlhttp.open( "GET", request, false ); // false for synchronous request
     	xmlhttp.send( null );
     	return xmlHttp.responseText.rows[0].elements[0].duration.text;
