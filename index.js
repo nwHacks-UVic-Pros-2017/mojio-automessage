@@ -74,7 +74,8 @@ app.get('/setupLeaveWorkAlerts', function(req, res) {
 		}
 	});
 
-	twilio.registerNumber(phone, function(verification_code) {
+	twilio.registerNumber(number, function(verification_code) {
+		console.log(verification_code);
 		res.send({"code" : verification_code });
 	});
 
