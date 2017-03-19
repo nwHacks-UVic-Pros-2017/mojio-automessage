@@ -1,4 +1,5 @@
 "use strict";
+var XMLHttpRequest = require("xmlhttprequest").XMLHttpRequest;
 
 class GoogleHandler {
 
