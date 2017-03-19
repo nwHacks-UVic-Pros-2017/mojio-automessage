@@ -74,6 +74,9 @@ app.get('/setupLeaveWorkAlerts', function(req, res) {
 		}
 	});
 
+	twilio.registerNumber(phone, function(verification_code) {
+		res.send({"code" : verification_code });
+	});
 
 	app.post('/' + vehicleId + '/ignition_on', function(req, res) {
 		console.log("Car turned on");

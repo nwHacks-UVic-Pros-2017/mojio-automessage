@@ -13,15 +13,19 @@ class TwilioSMSHandler {
         this.client = new require('twilio')(this.accountSid, this.authToken);
     }
 
-
-    sendText(to, body) {
+    registerNumber(phone, callback) {
         this.client.outgoingCallerIds.create({
             phoneNumber: to
         }, function(err, callerId) {
-            console.log(err);
-            console.log(callerId);
+            if (err==null) {
+                callback(callerId.validation_code);
+            } else {
+                callback(null);
+            }
         });
+    }
 
+    sendText(to, body) {
         this.client.messages.create({
             to:  to,
             from: process.env.TWILIO_NUMBER,
