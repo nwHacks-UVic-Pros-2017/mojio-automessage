@@ -20,17 +20,6 @@ app.listen(port, function() {
     console.log("Listening on port " + port);
 });
 
-app.get('/', function(req, res) {
-    mojio.authorize('aj.podeziel@gmail.com', 'ZTxNPJvx7@vGw0', function(success) {
-    	if (success) {
-    		console.log("Authenticated");
-    	} else {
-			console.log("NOT Authenticated");
-    	}
-    });
-    res.send("I'm an app!!!!!!!!!!!");
-});
-
 console.log(path.join(__dirname, "static"));
 app.use('/static', express.static(path.join(__dirname, "static")));
 
