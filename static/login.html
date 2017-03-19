@@ -1,0 +1,51 @@
+<!--
+Adapted from Twitter Bootstrap dashboard example:
+    http://getbootstrap.com/examples/dashboard/
+-->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>Ben the Assistant</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="/static/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Custom styles for this template -->
+    <link href="/static/css/signin.css" rel="stylesheet">
+
+</head>
+
+<header style="text-align:center;">
+    <img src="/static/images/ben_logo.png" height="200px" width="175px">
+</header>
+
+<body>
+
+<div class="container screen-center">
+
+    <form class="form-signin">
+        <h2 class="form-signin-heading" style="padding-left:50px; font-family:'Adobe Garamond Pro';">The droid you've been looking for</h2>
+        <label for="inputEmail" class="sr-only">Email address</label>
+        <input type="email" id="inputEmail" class="form-control" placeholder="Email address" required autofocus>
+        <label for="inputPassword" class="sr-only">Password</label>
+        <input type="password" id="inputPassword" class="form-control" placeholder="Password" required>
+        <div class="checkbox">
+            <label>
+                <input type="checkbox" value="remember-me"> Remember me
+            </label>
+        </div>
+        <button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
+    </form>
+
+</div> <!-- /container -->
+
+<!-- JQuery + page logic -->
+<script type="text/javascript" src="/static/js/jquery-3.2.0.min.js"></script>
+<script type="text/javascript" src="/static/js/signin.js"></script>
+
+</body>
+</html>
