@@ -20,7 +20,8 @@ class TwilioSMSHandler {
             from: process.env.TWILIO_NUMBER,
             body: body,
         }, function (err, message) {
-            console.log(message.sid);
+            console.log(message);
+            console.log(err);
         });
     }
 
