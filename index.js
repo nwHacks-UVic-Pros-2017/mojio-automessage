@@ -87,9 +87,9 @@ app.get('/setupLeaveWorkAlerts', function(req, res) {
 				if (google.is_work_address(workAddress, location.Lat, location.Lng)) {
 					console.log("Car is near work address");
 					var duration = google.estimate_time_home(workAddress, homeAddress);
-					var msg = twilio.formatMessage(workAddress, homeAddress, duration);
+					var msg = twilio.formatMessage(fromName, toName, duration);
 					console.log(msg);
-					twilio.sendText(phone, msg);
+					twilio.sendText(number, msg);
 				} else {
 					console.log("Car is not near work address");
 				}
