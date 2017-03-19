@@ -9,7 +9,6 @@ var session = require('express-session');
 var path = require('path');
 
 var app = express();
-var mojio = new MojioUser();
 var google = new GoogleHandler();
 var twilio = new TwilioSMSHandler();
 
@@ -47,15 +46,22 @@ app.get("/signIn", function(req, res) {
 });
 
 app.get('/login', function(req, res) {
-	mojio.authorize(req.query.userName, req.query.password, function(success) {
-    	if (success) {
-    		console.log("Authenticated with user " + req.query.userName);
-    		res.send("{ \"status\": \"success\"}");
-    	} else {
-			console.log("NOT Authenticated");
-			res.send("{ \"status\": \"failed\"}");
-    	}
+    var moj_client = new MojioUser();
+    moj_client.authorize(req.query.userName, req.query.password, function(success) {
+        if (success) {
+            console.log("Authenticated with user " + req.query.userName);
+            req.session.mojio_client = moj_client;
+            res.send("{ \"status\": \"success\"}");
+        } else {
+            console.log("NOT Authenticated");
+            res.send("{ \"status\": \"failed\"}");
+        }
     });
+});
+
+app.get('/logout', function(req, res) {
+    req.session.mojio_client = undefined;
+    res.redirect("/signIn");
 });
 
 app.get('/getVehicles', isAuthenticated, function(req, res) {

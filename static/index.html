@@ -11,10 +11,10 @@ Adapted from Twitter Bootstrap dashboard example:
     <title>Dashboard Template for Bootstrap</title>
 
     <!-- Bootstrap core CSS -->
-    <link href="./static/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/static/css/bootstrap.min.css" rel="stylesheet">
 
     <!-- Custom styles for this template -->
-    <link href="./static/css/dashboard.css" rel="stylesheet">
+    <link href="/static/css/dashboard.css" rel="stylesheet">
 </head>
 
 <body>
@@ -28,17 +28,12 @@ Adapted from Twitter Bootstrap dashboard example:
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <img src="./images/ben_logo.png" align="middle" height="36px" width="36px"><a class="navbar-brand" href="#"></a></img>
+            <img src="/static/images/ben_logo.png" align="middle" height="36px" width="36px"><a class="navbar-brand" href="#"></a></img>
         </div>
         <div id="navbar" class="navbar-collapse collapse">
             <ul class="nav navbar-nav navbar-right">
-                <li><a href="#">Help</a></li>
-                <li><a href="#">Settings</a></li>
-                <li><a href="#">Logout</a></li>
+                <li><a href="/logout">Logout</a></li>
             </ul>
-            <form class="navbar-form navbar-right">
-                <input type="text" class="form-control" placeholder="Search...">
-            </form>
         </div>
     </div>
 </nav>
@@ -122,8 +117,7 @@ Adapted from Twitter Bootstrap dashboard example:
 <!-- Bootstrap core JavaScript
 ================================================== -->
 <!-- Placed at the end of the document so the pages load faster -->
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
-<script>window.jQuery || document.write('<script src="../../assets/js/vendor/jquery.min.js"><\/script>')</script>
-<script src="./js/bootstrap.min.js"></script>
+<script src="/static/js/jquery-3.2.0.min.js"></script>
+<script src="/static/js/bootstrap.min.js"></script>
 </body>
 </html>
