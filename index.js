@@ -5,9 +5,14 @@ var MojioUser = require('./lib/MojioUser.js');
 var http = require('http');
 var https = require('https');
 var fs = require('fs');
+var GoogleHandler = require('./GoogleHandler.js');
+var TwilioSMSHandler = require('./TwilioSMSHandler.js');
+
 
 var app = express();
 var mojio = new MojioUser();
+var google = new GoogleHandler();
+var twilio = new TwilioSMSHandler();
 
 var sslOptions = {
    key: fs.readFileSync('key.pem'),
@@ -61,21 +66,14 @@ app.get('/setupLeaveWorkAlerts', function(req, res) {
 	var fromName = req.query.fromName;
 	var toName = req.query.toName;
 	var workAddress = req.query.workAddress;
+	var homeAddress = req.query.homeAddress;
 	var vehicleId = req.query.vehicleId;
 
 	var base_url = req.protocol + '://' + req.get('host');
 	mojio.setup_ignition_event(vehicleId, base_url, function(key) {
 		res.send(key);
 		if (key) {
-			mojio.get_address(vehicleId, function(location) {
-				if (location) {
-					console.log(location);
-				} else {
-					console.log("error getting location");
-				}
-			});
-			//function to test if lat and lng are workAddress
-			//if so, use sms
+			//post setup success
 		} else {
 			//error
 		}
@@ -85,6 +83,18 @@ app.get('/setupLeaveWorkAlerts', function(req, res) {
 	app.post('/' + vehicleId + '/ignition_on', function(req, res) {
 		console.log("Car turned on");
 	    console.log(req);
+		mojio.get_address(vehicleId, function(location) {
+				if (location) {
+					console.log(location);
+				} else {
+					console.log("error getting location");
+				}
+				if (google.is_work_address(workAddress, location.Lat, location.Lng)) {
+					var duration = google.estimate_time_home(workAddress, homeAddress);
+					var msg = twilio.formatMessage(workAddress, homeAddress, duration);
+					twilio.sendText(phone, msg);
+				}
+			});
 	    //Send txt code here
 	});
 });
