@@ -63,9 +63,9 @@ app.get('/setupLeaveWorkAlerts', function(req, res) {
 	mojio.setup_ignition_event(vehicleId, base_url, function(key) {
 		res.send(key);
 		if (key) {
-			//post setup success
+			console.log("Mojio sucessfully posting on ignition-on");
 		} else {
-			//error
+			console.log("Mojio failure posting on ignition-on");
 		}
 	});
 
@@ -75,9 +75,9 @@ app.get('/setupLeaveWorkAlerts', function(req, res) {
 	    console.log(req);
 		mojio.get_address(vehicleId, function(location) {
 				if (location) {
-					console.log(location);
+					console.log("Mojio sucessfully recieved car's location");
 				} else {
-					console.log("error getting location");
+					console.log("Mojio failed getting car's location");
 				}
 				if (google.is_work_address(workAddress, location.Lat, location.Lng)) {
 					var duration = google.estimate_time_home(workAddress, homeAddress);
