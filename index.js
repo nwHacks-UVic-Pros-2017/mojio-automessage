@@ -64,6 +64,7 @@ app.get('/setupLeaveWorkAlerts', function(req, res) {
 	var vehicleId = req.query.vehicleId;
 
 	var base_url = req.protocol + '://' + req.get('host');
+	console.log(base_url);
 	mojio.setup_ignition_event(vehicleId, base_url, function(key) {
 		res.send(key);
 		if (key) {
