@@ -17,7 +17,7 @@ var certificate = fs.readFileSync('./static/sslcert/fullchain.pem');
 var privateKey = fs.readFileSync('./static/sslcert/privkey.pem');
 
 var credentials = {key: privateKey, cert: certificate};
-
+console.log(credentials);
 var app = express();
 var google = new GoogleHandler();
 var twilio = new TwilioSMSHandler();
