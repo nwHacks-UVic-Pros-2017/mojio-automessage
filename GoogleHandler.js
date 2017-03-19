@@ -6,7 +6,7 @@ class GoogleHandler {
 	constructor() {
 		this.apiKey = process.env.GOOGLE_API_KEY;
 		this.url = "https://maps.googleapis.com/maps/api/distancematrix/json?"
-		this.distance_threadhold = 500; //meters
+		this.distance_threadhold = 1000; //meters
 	}
 
 	build_request_url(orgin, dest, apiKey) {
@@ -18,7 +18,6 @@ class GoogleHandler {
 		var xmlhttp = new XMLHttpRequest();
 		xmlhttp.open( "GET", request, false ); // false for synchronous request
     	xmlhttp.send( null );
-    	console.log(xmlhttp.responseText);
     	var res = JSON.parse(xmlhttp.responseText);
     	return res.rows[0].elements[0].duration.text;
 	}
@@ -28,8 +27,8 @@ class GoogleHandler {
 		var xmlhttp = new XMLHttpRequest();
 		xmlhttp.open( "GET", request, false ); // false for synchronous request
     	xmlhttp.send( null );
-    	console.log(xmlhttp.responseText);
     	var res = JSON.parse(xmlhttp.responseText);
+    	console.log(res.rows[0].elements[0].distance.value);
     	var is_within_distance = res.rows[0].elements[0].distance.value <= this.distance_threadhold;
     	return is_within_distance;
 	}
