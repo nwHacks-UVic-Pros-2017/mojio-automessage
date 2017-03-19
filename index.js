@@ -13,7 +13,7 @@ var fs = require('fs');
 var http = require('http');
 var https = require('https');
 
-var certificate = fs.readFileSync('./static/sslcert/fullchain.pem'),;
+var certificate = fs.readFileSync('./static/sslcert/fullchain.pem');
 var privateKey = fs.readFileSync('./static/sslcert/privkey.pem');
 
 var credentials = {key: privateKey, cert: certificate};
