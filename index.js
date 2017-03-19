@@ -25,7 +25,7 @@ app.use('/static', express.static(path.join(__dirname, "static")));
 
 // session middleware (for tracking Mojio logins)
 var sess = {
-    "secret": "fdsf53t44rfef23",
+    "secret": process.env.SESSION_COOKIE_SECRET,
     "cookie": {"maxAge": 360000}
 };
 app.use(session(sess));
