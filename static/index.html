@@ -1,0 +1,102 @@
+<!--
+Adapted from Twitter Bootstrap dashboard example:
+    http://getbootstrap.com/examples/dashboard/
+-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>Dashboard Template for Bootstrap</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="./css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Custom styles for this template -->
+    <link href="./css/dashboard.css" rel="stylesheet">
+</head>
+
+<body>
+
+<nav class="navbar navbar-inverse navbar-fixed-top">
+    <div class="container-fluid">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <img src="./images/ben_logo.png" align="middle" height="36px" width="36px"><a class="navbar-brand" href="#"></a></img>
+        </div>
+        <div id="navbar" class="navbar-collapse collapse">
+            <ul class="nav navbar-nav navbar-right">
+                <li><a href="#">Help</a></li>
+                <li><a href="#">Settings</a></li>
+                <li><a href="#">Logout</a></li>
+            </ul>
+            <form class="navbar-form navbar-right">
+                <input type="text" class="form-control" placeholder="Search...">
+            </form>
+        </div>
+    </div>
+</nav>
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-sm-3 col-md-2 sidebar">
+            <ul class="nav nav-sidebar">
+                <li><h3>Cars</h3></li>
+                <li class="active"><a href="#">2011 Mazda 3 <span class="sr-only">(current)</span></a></li>
+                <li><a href="#">2015 Toyota GT86</a></li>
+                <li><a href="#">2005 Toyota Echo</a></li>
+                <li><a href="#">2017 Volkswagen Golf GTi</a></li>
+            </ul>
+        </div>
+        <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+            <h1 class="page-header">2011 Mazda 3</h1>
+            <div id="map" width="100px" height="100px"></div>
+            <script>
+                function initMap() {
+                    var myLatLng = {lat: -25.363, lng: 131.044};
+
+                    // Create a map object and specify the DOM element for display.
+                    var map = new google.maps.Map(document.getElementById('map'), {
+                        center: myLatLng,
+                        scrollwheel: false,
+                        zoom: 4
+                    });
+
+                    // Create a marker and set its position.
+                    var marker = new google.maps.Marker({
+                        map: map,
+                        position: myLatLng,
+                        title: 'Hello World!'
+                    });
+                }
+
+            </script>
+            <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAKl5I7cBy6FTK4sEzAPHJ4gMYx2IaH5XE&callback=initMap"
+                    async defer></script>
+
+            <div class="row">
+                <div class="col-lg-10">
+                    <h2>Rules</h2>
+                </div>
+                <div class="col-lg-2">
+                    Test
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Bootstrap core JavaScript
+================================================== -->
+<!-- Placed at the end of the document so the pages load faster -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+<script>window.jQuery || document.write('<script src="../../assets/js/vendor/jquery.min.js"><\/script>')</script>
+<script src="./js/bootstrap.min.js"></script>
+</body>
+</html>
