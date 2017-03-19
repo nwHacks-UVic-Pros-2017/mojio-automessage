@@ -69,24 +69,24 @@ app.get('/setupLeaveWorkAlerts', function(req, res) {
 		}
 	});
 
+});
 
-	app.post('/' + vehicleId + '/ignition_on', function(req, res) {
-		console.log("Car turned on");
-	    console.log(req);
-		mojio.get_address(vehicleId, function(location) {
-				if (location) {
-					console.log(location);
-				} else {
-					console.log("error getting location");
-				}
-				if (google.is_work_address(workAddress, location.Lat, location.Lng)) {
-					var duration = google.estimate_time_home(workAddress, homeAddress);
-					var msg = twilio.formatMessage(workAddress, homeAddress, duration);
-					twilio.sendText(phone, msg);
-				}
-			});
-	    //Send txt code here
-	});
+app.post('/' + vehicleId + '/ignition_on', function(req, res) {
+    console.log("Car turned on");
+    console.log(req);
+    mojio.get_address(vehicleId, function(location) {
+            if (location) {
+                console.log(location);
+            } else {
+                console.log("error getting location");
+            }
+            if (google.is_work_address(workAddress, location.Lat, location.Lng)) {
+                var duration = google.estimate_time_home(workAddress, homeAddress);
+                var msg = twilio.formatMessage(workAddress, homeAddress, duration);
+                twilio.sendText(phone, msg);
+            }
+        });
+    //Send txt code here
 });
 
 app.get('/getAddress', function(req, res) {
