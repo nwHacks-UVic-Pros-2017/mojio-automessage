@@ -19,7 +19,8 @@ class GoogleHandler {
 		xmlhttp.open( "GET", request, false ); // false for synchronous request
     	xmlhttp.send( null );
     	console.log(xmlhttp.responseText);
-    	return xmlhttp.responseText.rows[0].elements[0].duration.text;
+    	var res = JSON.parse(xmlhttp.responseText);
+    	return res.rows[0].elements[0].duration.text;
 	}
 
 	is_work_address(workAddress, lat, lng) {
@@ -28,7 +29,8 @@ class GoogleHandler {
 		xmlhttp.open( "GET", request, false ); // false for synchronous request
     	xmlhttp.send( null );
     	console.log(xmlhttp.responseText);
-    	var is_within_distance = xmlhttp.responseText.rows[0].elements[0].distance.value <= this.distance_threadhold;
+    	var res = JSON.parse(xmlhttp.responseText);
+    	var is_within_distance = res.rows[0].elements[0].distance.value <= this.distance_threadhold;
     	return is_within_distance;
 	}
 }
