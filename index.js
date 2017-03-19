@@ -23,14 +23,6 @@ app.get('/', function(req, res) {
     mojio.authorize('aj.podeziel@gmail.com', 'ZTxNPJvx7@vGw0', function(success) {
     	if (success) {
     		console.log("Authenticated");
-    		mojio.suscribe_all_user_vehicles(function(success) {
-		    	if (success) {
-		    		console.log("Success registering vehicles");
-		    	} else {
-			    	console.log("Error with vehicles");
-			        console.log(err);
-		    	}
-    		});
     	} else {
 			console.log("NOT Authenticated");
     	}
@@ -63,7 +55,61 @@ app.get('/getVehicles', function(req, res) {
 	});
 });
 
-app.post('/:vehicle_id/ignition_on', function(req, res) {
-	console.log("Car turned on");
-    console.log(req);
+app.get('/setupLeaveWorkAlerts', function(req, res) {
+	console.log('/setupLeaveWorkAlerts');
+	var number = req.query.number;
+	var fromName = req.query.fromName;
+	var toName = req.query.toName;
+	var workAddress = req.query.workAddress;
+	var vehicleId = req.query.vehicleId;
+
+	var base_url = req.protocol + '://' + req.get('host');
+	mojio.setup_ignition_event(vehicleId, base_url, function(key) {
+		res.send(key);
+		if (key) {
+			mojio.get_address(vehicleId, function(location) {
+				if (location) {
+					console.log(location);
+				} else {
+					console.log("error getting location");
+				}
+			});
+			//function to test if lat and lng are workAddress
+			//if so, use sms
+		} else {
+			//error
+		}
+	});
+
+
+	app.post('/' + vehicleId + '/ignition_on', function(req, res) {
+		console.log("Car turned on");
+	    console.log(req);
+	    //Send txt code here
+	});
+});
+
+app.get('/getAddress', function(req, res) {
+	console.log('/getAddress');
+	var vehicleId = req.query.vehicleId;
+	mojio.get_address(vehicleId, function(location) {
+		if (location) {
+			console.log(location);
+			res.send(location);
+		} else {
+			console.log("error getting location");
+		}
+	});
+});
+
+app.get('/removeLeaveWorkAlerts', function(req, res) {
+	var key = req.query.key;
+	mojio.delete_observer(key, function(success) {
+		if (success) {
+    		console.log("Removed leave work alerts");
+    		res.send("{ status: \"success\"}");
+    	} else {
+			res.send("{ status: \"failed\"}");
+    	}
+	});
 });
