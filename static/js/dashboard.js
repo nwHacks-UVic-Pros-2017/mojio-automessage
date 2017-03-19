@@ -55,6 +55,22 @@ function setCar(carInd) {
 
 }
 
+$("#enable-disable-switch").click(function(e) {
+
+    var number = $("#from-phone").val();
+    var fromName = "Jim";
+    var toName = "Joe";
+
+
+    var label = $("#ed-label");
+    if (this.checked) {
+        label.html("Automatic text ENABLED");
+    }
+    else {
+        label.html("Automatic text DISABLED");
+    }
+});
+
 $(document).ready(function() {
     console.log("Starting dashboard...");
     init();
