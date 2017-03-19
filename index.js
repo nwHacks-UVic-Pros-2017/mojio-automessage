@@ -46,7 +46,7 @@ app.post('/signIn', function(req, res) {
 	mojio.authorize(req.query.userName, req.query.password, function(success) {
     	if (success) {
     		console.log("Authenticated with user " + req.query.userName);
-    		res.send("{ status: \"success\"}");
+    		res.redirect('/');
     	} else {
 			console.log("NOT Authenticated");
 			res.send("{ status: \"failed\"}");
