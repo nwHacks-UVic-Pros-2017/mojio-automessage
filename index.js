@@ -13,8 +13,8 @@ var fs = require('fs');
 var http = require('http');
 var https = require('https');
 
-var certificate = fs.readFileSync('./static/sslcert/fullchain.pem');
-var privateKey = fs.readFileSync('./static/sslcert/privkey.pem');
+var certificate = fs.readFileSync('./static/sslcert/fullchain.pem', 'utf8');
+var privateKey = fs.readFileSync('./static/sslcert/privkey.pem',  'utf8');
 
 var credentials = {key: privateKey, cert: certificate};
 var app = express();
