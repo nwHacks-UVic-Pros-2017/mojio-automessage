@@ -13,11 +13,10 @@ var fs = require('fs');
 var http = require('http');
 var https = require('https');
 
-var certificate = fs.readFileSync('./static/sslcert/fullchain.pem');
-var privateKey = fs.readFileSync('./static/sslcert/privkey.pem');
+var certificate = fs.readFileSync('./static/sslcert/fullchain.pem', 'utf8');
+var privateKey = fs.readFileSync('./static/sslcert/privkey.pem',  'utf8');
 
 var credentials = {key: privateKey, cert: certificate};
-
 var app = express();
 var google = new GoogleHandler();
 var twilio = new TwilioSMSHandler();
@@ -25,9 +24,10 @@ var mj_user_registry = new MojioUserRegistry();
 
 var httpServer = http.createServer(app);
 var httpsServer = https.createServer(credentials, app);
-
+console.log(httpServer);
 httpServer.listen(8080);
-httpsServer.listen(8443);
+var res = httpsServer.listen(8443);
+console.log(res);
 
 app.use('/static', express.static(path.join(__dirname, "static")));
 
