@@ -5,12 +5,14 @@ var MojioUser = require('./lib/MojioUser.js');
 var fs = require('fs');
 var GoogleHandler = require('./GoogleHandler.js');
 var TwilioSMSHandler = require('./TwilioSMSHandler.js');
+var MojioUserRegistry = require('./lib/MojioUserRegistry.js');
 var session = require('express-session');
 var path = require('path');
 
 var app = express();
 var google = new GoogleHandler();
 var twilio = new TwilioSMSHandler();
+var mj_user_registry = new MojioUserRegistry();
 
 
 var port = process.env.PORT || 8080;
@@ -30,7 +32,7 @@ app.use(session(sess));
 
 // check if session is authorized, if not redirect to login screen
 function isAuthenticated(req, res, next) {
-    if (req.session.mojio_client && req.session.mojio_client.auth_state) {
+    if (mj_user_registry.getBySessionId(req.sessionId) !== undefined) {
         return next();
     }
 
@@ -50,7 +52,7 @@ app.get('/login', function(req, res) {
     moj_client.authorize(req.query.userName, req.query.password, function(success) {
         if (success) {
             console.log("Authenticated with user " + req.query.userName);
-            req.session.mojio_client = moj_client;
+            mj_user_registry.register(req.sessionId, moj_client);
             res.send("{ \"status\": \"success\"}");
         } else {
             console.log("NOT Authenticated");
@@ -66,7 +68,8 @@ app.get('/logout', function(req, res) {
 
 app.get('/getVehicles', isAuthenticated, function(req, res) {
 	console.log("/getVehicles");
-	mojio.get_user_vechiles(function (vehicles) {
+    var moj_client = mj_user_registry.getBySessionId(req.sessionId);
+	moj_client.get_user_vehicles(function (vehicles) {
 		if (vehicles) {
 			console.log("Sending vehicles");
 			console.log(vehicles);
@@ -89,7 +92,8 @@ app.get('/setupLeaveWorkAlerts', function(req, res) {
 	var base_url = 'https://' + req.get('host');
 	var key;
 	console.log(base_url);
-	mojio.setup_ignition_event(vehicleId, base_url, function(res) {
+    var moj_client = mj_user_registry.getBySessionId(req.sessionId);
+	moj_client.setup_ignition_event(vehicleId, base_url, function(res) {
 		if (res) {
 			console.log("Mojio sucessfully posting on ignition-on");
 			console.log(res);
@@ -106,7 +110,8 @@ app.get('/setupLeaveWorkAlerts', function(req, res) {
 
 	app.post('/' + vehicleId + '/ignition_on', function(req, res) {
 		console.log("Car turned on");
-		mojio.get_address(vehicleId, function(location) {
+        var moj_client = mj_user_registry.getBySessionId(req.sessionId);
+		moj_client.get_address(vehicleId, function(location) {
 				if (location) {
 					console.log("Mojio sucessfully recieved car's location");
 				} else {
@@ -129,7 +134,8 @@ app.get('/setupLeaveWorkAlerts', function(req, res) {
 app.get('/getAddress', isAuthenticated, function(req, res) {
 	console.log('/getAddress');
 	var vehicleId = req.query.vehicleId;
-	mojio.get_address(vehicleId, function(location) {
+    var moj_client = mj_user_registry.getBySessionId(req.sessionId);
+	moj_client.get_address(vehicleId, function(location) {
 		if (location) {
 			console.log(location);
 			res.send(location);
@@ -141,7 +147,8 @@ app.get('/getAddress', isAuthenticated, function(req, res) {
 
 app.get('/removeLeaveWorkAlerts', isAuthenticated, function(req, res) {
 	var key = req.query.key;
-	mojio.delete_observer(key, function(success) {
+    var moj_client = mj_user_registry.getBySessionId(req.sessionId);
+	moj_client.delete_observer(key, function(success) {
 		if (success) {
     		console.log("Removed leave work alerts");
     		res.send("{ status: \"success\"}");

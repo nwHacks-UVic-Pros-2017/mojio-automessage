@@ -41,39 +41,13 @@ Adapted from Twitter Bootstrap dashboard example:
 <div class="container-fluid">
     <div class="row">
         <div class="col-sm-3 col-md-2 sidebar">
-            <ul class="nav nav-sidebar">
+            <ul id="cars-list" class="nav nav-sidebar">
                 <li><h3>Cars</h3></li>
-                <li class="active"><a href="#">2011 Mazda 3 <span class="sr-only">(current)</span></a></li>
-                <li><a href="#">2015 Toyota GT86</a></li>
-                <li><a href="#">2005 Toyota Echo</a></li>
-                <li><a href="#">2017 Volkswagen Golf GTi</a></li>
             </ul>
         </div>
         <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
-            <h1 class="page-header">2011 Mazda 3</h1>
+            <h1 id="current-car-name" class="page-header">2011 Mazda 3</h1>
             <div id="map" style="height:600px;"></div>
-            <script>
-                function initMap() {
-                    var myLatLng = {lat: 49.258838, lng: -123.056623};
-
-                    // Create a map object and specify the DOM element for display.
-                    var map = new google.maps.Map(document.getElementById('map'), {
-                        center: myLatLng,
-                        scrollwheel: false,
-                        zoom: 12
-                    });
-
-                    // Create a marker and set its position.
-                    var marker = new google.maps.Marker({
-                        map: map,
-                        position: myLatLng,
-                        title: 'Hello World!'
-                    });
-                }
-
-            </script>
-            <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAKl5I7cBy6FTK4sEzAPHJ4gMYx2IaH5XE&callback=initMap"
-                    async defer></script>
 
             <div class="row">
                 <label for="basic-url">What is the address at your current location?</label>
@@ -114,10 +88,16 @@ Adapted from Twitter Bootstrap dashboard example:
     </div>
 </div>
 
+
+
 <!-- Bootstrap core JavaScript
 ================================================== -->
 <!-- Placed at the end of the document so the pages load faster -->
 <script src="/static/js/jquery-3.2.0.min.js"></script>
+<script src="/static/js/dashboard.js"></script>
+<!-- Google Maps API init -->
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAKl5I7cBy6FTK4sEzAPHJ4gMYx2IaH5XE&callback=initMap"
+        async defer></script>
 <script src="/static/js/bootstrap.min.js"></script>
 </body>
 </html>
